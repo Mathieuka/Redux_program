@@ -2,6 +2,8 @@ const ADD_POINT = "ADD_POINT";
 const REMOVE_POINT = "REMOVE_POINT";
 const CHANGE_NAME = "CHANGE_NAME";
 
+// ***Reducer***
+
 const addPoint = (state = {}, action) => {
     switch(action.type){
         case ADD_POINT: 
@@ -13,7 +15,6 @@ const addPoint = (state = {}, action) => {
         default :
             return state;
     }
-    
 }
 
 const removePoint = (state = {}, action) => {
@@ -40,11 +41,13 @@ const changeName = (state = {}, action) => {
     }
 }
 
-function combineReducer(reducers){
 
+// ***Combine reducer and store***
+function combineReducer(reducers){
     let state = {
         ...reducers
     }
+
     return {
         createStore : (reducers) =>{
             let listeners = [];
@@ -72,16 +75,22 @@ function combineReducer(reducers){
     } 
 }
 
+// subscribe reducer to the store
 const subscribe = [
     addPoint,
     removePoint,
     changeName]
 
+// create store
 const store = combineReducer({ points: 0, name: "" }).createStore(subscribe);
 
+// ***Action***
 store.dispatch({ type: "ADD_POINT"});
 store.dispatch({ type: "ADD_POINT"});
 store.dispatch({type: "REMOVE_POINT"});
 store.dispatch({type: "CHANGE_NAME", name: "Pierre"});
+
+
+
 store.getState();
 
